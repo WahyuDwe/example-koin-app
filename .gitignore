@@ -13,5 +13,4 @@
 .externalNativeBuild
 .cxx
 local.properties
-app/src/main/java/com/dwi/mykoinapp/utils/Constanta.kt
-app/src/main/java/com/dwi/mykoinapp/utils/SharedPreferencesHelper.kt
+settings.gradle

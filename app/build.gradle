@@ -16,6 +16,16 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file("local.properties").newDataInputStream())
+
+        buildConfigField "String", "API_KEY", "\"${properties.getProperty("API_KEY")}\""
+    }
+
+    buildFeatures {
+        buildConfig true
+        viewBinding true
     }
 
     buildTypes {
@@ -35,6 +45,14 @@ android {
 
 dependencies {
 
+    ext {
+        koin_version = '3.4.2'
+        retrofit_version = '2.9.0'
+        okhttp_version = '4.9.2'
+        coil_version = '2.4.0'
+        paging_version = '3.1.0'
+    }
+
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.5.0'
@@ -44,16 +62,17 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-    def koin_version = '3.4.2'
     implementation "io.insert-koin:koin-android:$koin_version"
     implementation "io.insert-koin:koin-androidx-navigation:$koin_version"
 
-    def retrofit_version = '2.9.0'
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
-    def okhttp_version = '4.9.1'
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
     implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+
+    implementation "io.coil-kt:coil:$coil_version"
+
+    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 
 }

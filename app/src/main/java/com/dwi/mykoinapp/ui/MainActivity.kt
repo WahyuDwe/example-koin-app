@@ -1,36 +1,30 @@
 package com.dwi.mykoinapp.ui
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.dwi.mykoinapp.R
-import com.dwi.mykoinapp.utils.SharedPreferencesHelper
-import org.koin.android.ext.android.inject
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.dwi.mykoinapp.databinding.ActivityMainBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
     private val viewModel by viewModel<MainViewModel>()
-    private val sharedPreferencesHelper: SharedPreferencesHelper by inject()
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var newsAdapter: NewsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+//        val text = "Text from MainActivity"
+//        sharedPreferencesHelper.putString("text", text)
+        binding.rvNews.layoutManager = LinearLayoutManager(this)
 
-        val text = "Text from MainActivity"
-
-        sharedPreferencesHelper.putString("text", text)
-
-        val button = findViewById<Button>(R.id.btn_detail)
-
-        button.setOnClickListener {
-            startActivity(Intent(this@MainActivity, DetailActivity::class.java))
-        }
-
-
-        viewModel.getHeadlineNews().observe(this) {
-            Log.d("MainActivity", "onCreate: $it")
+        newsAdapter = NewsAdapter()
+        binding.rvNews.adapter = newsAdapter
+        viewModel.headline.observe(this) { headline ->
+            newsAdapter.submitData(lifecycle, headline)
+            Log.d("MainActivity", "headline: $headline")
         }
     }
 }

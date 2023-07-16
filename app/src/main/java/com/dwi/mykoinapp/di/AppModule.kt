@@ -14,6 +14,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 val appModule = module {
     single {
@@ -21,6 +22,8 @@ val appModule = module {
             HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
         val client = OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(30, TimeUnit.SECONDS)
             .build()
         Retrofit.Builder()
             .baseUrl("https://newsapi.org/v2/")
@@ -36,11 +39,6 @@ val appModule = module {
     single {
         MainRepositoryImpl(get(), get())
     }
-    viewModel {
-        MainViewModel(get())
-    }
-
-
 }
 
 fun provideSharedPreferences(context: Context): SharedPreferences {

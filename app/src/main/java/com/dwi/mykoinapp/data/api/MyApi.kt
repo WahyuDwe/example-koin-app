@@ -9,9 +9,10 @@ import retrofit2.http.Query
 interface MyApi {
 
     /**
-     * @param countryCode is a code of country that we want to get the headline news
+     * @param keyword is a keyword to select specific topic you can use this with searchview
      * @param apiKey is an api key from newsapi.org you can get it by register to newsapi.org
      **/
+
     @GET("everything")
     suspend fun getHeadLine(
         @Query("pageSize") pageSize: Int,

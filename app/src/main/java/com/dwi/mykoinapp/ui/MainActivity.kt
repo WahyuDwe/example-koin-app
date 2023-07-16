@@ -1,9 +1,10 @@
 package com.dwi.mykoinapp.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.dwi.mykoinapp.adapter.LoadingStateAdapter
+import com.dwi.mykoinapp.adapter.NewsAdapter
 import com.dwi.mykoinapp.databinding.ActivityMainBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -21,10 +22,13 @@ class MainActivity : AppCompatActivity() {
         binding.rvNews.layoutManager = LinearLayoutManager(this)
 
         newsAdapter = NewsAdapter()
-        binding.rvNews.adapter = newsAdapter
+        binding.rvNews.adapter = newsAdapter.withLoadStateFooter(
+            footer = LoadingStateAdapter {
+                newsAdapter.retry()
+            })
         viewModel.headline.observe(this) { headline ->
             newsAdapter.submitData(lifecycle, headline)
-            Log.d("MainActivity", "headline: $headline")
+
         }
     }
 }

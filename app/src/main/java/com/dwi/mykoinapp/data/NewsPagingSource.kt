@@ -24,7 +24,7 @@ class NewsPagingSource(private val myApi: MyApi) : PagingSource<Int, ArticlesIte
             LoadResult.Page(
                 data = responseData,
                 prevKey = if (position == 1) null else position - 1,
-                nextKey = if (responseData.isNullOrEmpty()) null else position + 1
+                nextKey = if (responseData.isEmpty()) null else position + 1
             )
         } catch (e: Exception) {
             Log.e("NewsPagingSource", "load: ${e.message}", e)

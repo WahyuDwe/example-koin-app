@@ -1,4 +1,4 @@
-package com.dwi.mykoinapp.ui
+package com.dwi.mykoinapp.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -22,14 +22,14 @@ class NewsAdapter : PagingDataAdapter<ArticlesItem, NewsAdapter.NewsViewHolder>(
 
     }
 
-    override fun onBindViewHolder(holder: NewsAdapter.NewsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         val news = getItem(position)
         if (news != null) {
             holder.bind(news)
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsAdapter.NewsViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         return NewsViewHolder(ItemNewsBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
